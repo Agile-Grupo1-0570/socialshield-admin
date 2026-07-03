@@ -1,0 +1,40 @@
+name: CI Static Page
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Verificar index.html
+        run: test -f index.html
+
+      - name: Verificar carpetas opcionales
+        run: |
+          for directory in css js; do
+            if [ -e "$directory" ]; then
+              test -d "$directory"
+              echo "Carpeta $directory verificada."
+            else
+              echo "Carpeta $directory no utilizada en este proyecto."
+            fi
+          done
+
+      - name: Listar estructura principal
+        run: find . -maxdepth 2 -not -path './.git*' -print | sort
+
+      - name: Confirmar validación
+        run: echo "La validación básica terminó correctamente."
