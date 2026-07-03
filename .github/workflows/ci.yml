@@ -38,3 +38,11 @@ jobs:
 
       - name: Confirmar validación
         run: echo "La validación básica terminó correctamente."
+      - name: Realizar merge a la rama develop
+        run: |
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git checkout develop
+            git merge origin/main
+            git push origin develop
+      
