@@ -38,11 +38,12 @@ jobs:
 
       - name: Confirmar validación
         run: echo "La validación básica terminó correctamente."
+      - name: Configurar CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
       - name: Analizar vulnerabilidades de dependencias
         uses: github/codeql-action/analyze@v3
-        with:
-          category: 'security'
-          run: echo "Análisis de vulnerabilidades completado."
           
     
       
