@@ -4,7 +4,7 @@
  * URL configurable del Webhook de producción o pruebas de n8n.
  * Reemplaza este valor antes de publicar la interfaz.
  */
-const N8N_WEBHOOK_URL = "https://TU-N8N.com/webhook/lanzar-campana";
+const N8N_WEBHOOK_URL = "https://lordmathi2741-socialshield.hf.space/webhook-test/lanzar-campana";
 
 /**
  * Catálogo de plantillas educativas.
