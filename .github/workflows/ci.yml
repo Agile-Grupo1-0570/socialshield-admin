@@ -48,6 +48,11 @@ jobs:
           languages: javascript
       - name: Analizar vulnerabilidades de dependencias
         uses: github/codeql-action/analyze@v3
+      - name: Guardar base de datos como Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeql-db-js
+          path: /home/runner/work/_temp/codeql_databases/javascript.zip
           
     
       
