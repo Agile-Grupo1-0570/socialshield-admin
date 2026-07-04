@@ -403,15 +403,18 @@ h1 {
 
 .template-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
 .template-card {
+  --template-accent: var(--blue-500);
+  --template-accent-ink: var(--blue-600);
+  --template-accent-soft: var(--blue-100);
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 206px;
+  min-height: 330px;
   flex-direction: column;
   align-items: stretch;
   padding: 18px;
@@ -444,9 +447,9 @@ button.template-card:focus-visible {
 }
 
 .template-card--selected {
-  border-color: var(--blue-500);
+  border-color: var(--template-accent);
   box-shadow:
-    0 0 0 2px rgba(37, 166, 232, 0.11),
+    0 0 0 2px rgba(37, 166, 232, 0.1),
     var(--shadow-md);
 }
 
@@ -457,8 +460,26 @@ button.template-card:focus-visible {
   width: 58px;
   height: 4px;
   border-radius: 0 0 0 5px;
-  background: linear-gradient(90deg, var(--blue-500), #66c9f6);
+  background: linear-gradient(90deg, var(--template-accent), var(--template-accent-ink));
   content: "";
+}
+
+.template-card--bcp {
+  --template-accent: #ed8a24;
+  --template-accent-ink: #173f67;
+  --template-accent-soft: #fff3e4;
+}
+
+.template-card--sunat {
+  --template-accent: #607e9c;
+  --template-accent-ink: #315c78;
+  --template-accent-soft: #eef4f8;
+}
+
+.template-card--bbva {
+  --template-accent: #1769b0;
+  --template-accent-ink: #0d5593;
+  --template-accent-soft: #eaf4fc;
 }
 
 .template-card--disabled {
@@ -481,10 +502,10 @@ button.template-card:focus-visible {
   width: 44px;
   height: 44px;
   place-items: center;
-  border: 1px solid #bee5f8;
+  border: 1px solid var(--template-accent);
   border-radius: 11px;
-  background: linear-gradient(145deg, #edf9ff, #dff4fd);
-  color: #146c9b;
+  background: var(--template-accent-soft);
+  color: var(--template-accent-ink);
   font-size: 0.65rem;
   font-weight: 850;
   letter-spacing: 0.08em;
@@ -525,22 +546,61 @@ button.template-card:focus-visible {
   display: none;
 }
 
+.template-card__entity {
+  margin-top: 15px;
+  color: var(--template-accent-ink);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
 .template-card h3 {
-  margin: 16px 0 5px;
+  margin: 3px 0 10px;
   color: var(--navy-900);
-  font-size: 1rem;
+  font-size: 1.08rem;
   letter-spacing: -0.01em;
 }
 
-.template-card p {
-  display: -webkit-box;
-  margin: 0;
-  overflow: hidden;
+.template-card__subject,
+.template-card__preview {
+  display: block;
+  border-radius: 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.template-card__subject {
+  padding-left: 9px;
+  border-left: 3px solid var(--template-accent);
+  color: var(--slate-700);
+}
+
+.template-card__subject small,
+.template-card__preview small {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--slate-500);
+  font-size: 0.57rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.template-card__description {
+  margin: 12px 0 0;
   color: var(--slate-600);
   font-size: 0.75rem;
   line-height: 1.5;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+}
+
+.template-card__preview {
+  margin-top: 11px;
+  padding: 9px 10px;
+  background: var(--template-accent-soft);
+  color: var(--slate-700);
+  font-weight: 600;
 }
 
 .template-card__footer {
@@ -549,7 +609,7 @@ button.template-card:focus-visible {
   gap: 5px;
   margin-top: auto;
   padding-top: 13px;
-  color: var(--blue-600);
+  color: var(--template-accent-ink);
   font-size: 0.7rem;
   font-weight: 750;
 }
@@ -1108,7 +1168,7 @@ textarea[aria-invalid="true"] {
   }
 
   .template-card {
-    min-height: 190px;
+    min-height: 315px;
   }
 
   .campaign-layout {
@@ -1243,7 +1303,7 @@ textarea[aria-invalid="true"] {
   }
 
   .template-card {
-    min-height: 178px;
+    min-height: 300px;
   }
 
   .section-block {
