@@ -42,17 +42,20 @@ jobs:
 
       - name: Confirmar validación
         run: echo "La validación básica terminó correctamente."
+
       - name: Configurar CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
+
       - name: Analizar vulnerabilidades de dependencias
         uses: github/codeql-action/analyze@v3
+
+      - name: Verificar archivo de base de datos CodeQL
+        run: test -f /home/runner/work/_temp/codeql_databases/javascript.zip
+
       - name: Guardar base de datos como Artifact
         uses: actions/upload-artifact@v4
         with:
           name: codeql-db-js
           path: /home/runner/work/_temp/codeql_databases/javascript.zip
-          
-    
-      
