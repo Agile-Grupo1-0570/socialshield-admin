@@ -8,6 +8,8 @@ const N8N_WEBHOOK_URL = "https://lordmathi2741-socialshield.hf.space/webhook-tes
 
 /**
  * Catálogo de plantillas educativas.
+ * Estas plantillas representan escenarios de capacitación interna y no usan
+ * logos, páginas oficiales ni mecanismos de captura de datos personales.
  *
  * Para agregar nuevas plantillas en el futuro:
  * 1. Añade un objeto a este arreglo con un `id` único.
@@ -19,33 +21,42 @@ const CAMPAIGN_TEMPLATES = [
   {
     id: "bcp",
     name: "BCP",
+    entity: "BCP Simulado",
+    subject: "Aviso de seguridad de cuenta",
     description:
-      "Simulación bancaria peruana para evaluar reconocimiento de correos sospechosos.",
+      "Simulación bancaria peruana para evaluar el reconocimiento de correos sospechosos.",
+    previewText:
+      "Hemos detectado una actividad que requiere revisión preventiva.",
     status: "Disponible",
     isAvailable: true,
+    accentClass: "template-card--bcp",
   },
   {
     id: "sunat",
     name: "SUNAT",
+    entity: "SUNAT Simulado",
+    subject: "Notificación tributaria pendiente",
     description: "Escenario educativo de notificación tributaria para capacitación interna.",
-    status: "Próximamente",
-    isAvailable: false,
-  },
-  {
-    id: "interbank",
-    name: "Interbank",
-    description: "Escenario educativo bancario preparado para una futura fase del MVP.",
-    status: "Próximamente",
-    isAvailable: false,
+    previewText: "Tiene una comunicación informativa pendiente de revisión.",
+    status: "Disponible",
+    isAvailable: true,
+    accentClass: "template-card--sunat",
   },
   {
     id: "bbva",
     name: "BBVA",
-    description: "Escenario educativo bancario preparado para una futura fase del MVP.",
-    status: "Próximamente",
-    isAvailable: false,
+    entity: "BBVA Simulado",
+    subject: "Actualización de seguridad digital",
+    description:
+      "Escenario educativo bancario para evaluar recomendaciones de seguridad digital.",
+    previewText: "Revise las recomendaciones recientes de seguridad digital.",
+    status: "Disponible",
+    isAvailable: true,
+    accentClass: "template-card--bbva",
   },
 ];
+
+// Interbank queda fuera del MVP actual y podrá incorporarse como escenario educativo futuro.
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -64,6 +75,7 @@ const elements = {
   submissionStatus: document.querySelector("#submission-status"),
   submissionMessage: document.querySelector("#submission-message"),
   summaryTemplate: document.querySelector("#summary-template"),
+  summaryTemplateSubject: document.querySelector("#summary-template-subject"),
   summaryCampaign: document.querySelector("#summary-campaign"),
   summaryRecipients: document.querySelector("#summary-recipients"),
   summarySender: document.querySelector("#summary-sender"),
@@ -84,6 +96,7 @@ function renderTemplates() {
     card.type = "button";
     card.className = [
       "template-card",
+      template.accentClass,
       isSelected ? "template-card--selected" : "",
       !template.isAvailable ? "template-card--disabled" : "",
     ]
@@ -94,7 +107,7 @@ function renderTemplates() {
     card.setAttribute("aria-pressed", String(isSelected));
     card.setAttribute(
       "aria-label",
-      `${template.name}: ${template.status}. ${template.description}`,
+      `${template.entity}. ${template.status}. Asunto sugerido: ${template.subject}. ${template.description} ${template.previewText}`,
     );
 
     const footerLabel = template.isAvailable
@@ -109,8 +122,17 @@ function renderTemplates() {
         <span class="template-card__mark" aria-hidden="true">EDU</span>
         <span class="template-card__status">${template.status}</span>
       </span>
+      <span class="template-card__entity">${template.entity}</span>
       <h3>${template.name}</h3>
-      <p>${template.description}</p>
+      <span class="template-card__subject">
+        <small>Asunto sugerido</small>
+        ${template.subject}
+      </span>
+      <p class="template-card__description">${template.description}</p>
+      <span class="template-card__preview">
+        <small>Vista previa educativa</small>
+        “${template.previewText}”
+      </span>
       <span class="template-card__footer">
         <svg viewBox="0 0 16 16" aria-hidden="true">${footerIcon}</svg>
         ${footerLabel}
@@ -190,6 +212,9 @@ function updateSummary() {
   elements.recipientCount.textContent = String(parsedRecipients.valid.length);
   elements.summaryRecipients.textContent = String(parsedRecipients.valid.length);
   elements.summaryTemplate.textContent = selectedTemplate?.name ?? "Sin seleccionar";
+  elements.summaryTemplateSubject.textContent =
+    selectedTemplate?.subject ?? "Sin asunto sugerido";
+  elements.summaryTemplateSubject.title = selectedTemplate?.subject ?? "";
   elements.summaryCampaign.textContent = campaignName || "Sin configurar";
   elements.summaryCampaign.title = campaignName;
   elements.summarySender.textContent = senderName || "Sin configurar";
@@ -275,8 +300,11 @@ function validateForm() {
 
 function buildPayload(recipients) {
   return {
+    template: selectedTemplate.id,
     templateId: selectedTemplate.id,
     templateName: selectedTemplate.name,
+    templateSubject: selectedTemplate.subject,
+    templateEntity: selectedTemplate.entity,
     campaignName: elements.campaignName.value.trim(),
     senderName: elements.senderName.value.trim(),
     recipients,

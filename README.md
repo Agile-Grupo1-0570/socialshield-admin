@@ -5,7 +5,7 @@ Interfaz web estática para configurar y lanzar campañas **simuladas** de conci
 
 > Como administrador, quiero lanzar campañas con 3 plantillas estáticas peruanas, para evaluar la vulnerabilidad base del personal.
 
-En esta primera versión, la plantilla educativa BCP está habilitada. SUNAT, Interbank y BBVA se muestran como opciones futuras deshabilitadas. El proyecto no incorpora logos, imágenes oficiales ni contenido malicioso; las referencias se usan únicamente para identificar escenarios de capacitación interna autorizada.
+Esta versión incluye tres plantillas educativas habilitadas: BCP, SUNAT y BBVA. Interbank queda fuera del MVP actual como posible escenario futuro. El proyecto no incorpora logos, imágenes oficiales ni contenido malicioso; las referencias se usan únicamente para identificar escenarios de capacitación interna autorizada.
 
 ## Características
 
@@ -44,8 +44,11 @@ El Webhook debe aceptar solicitudes `POST` con `Content-Type: application/json`.
 
 ```json
 {
+  "template": "bcp",
   "templateId": "bcp",
   "templateName": "BCP",
+  "templateSubject": "Aviso de seguridad de cuenta",
+  "templateEntity": "BCP Simulado",
   "campaignName": "Evaluación interna",
   "senderName": "Centro de Seguridad Digital",
   "recipients": [
@@ -71,9 +74,13 @@ El catálogo está definido en `CAMPAIGN_TEMPLATES`, dentro de `app.js`. Añade 
 {
   id: "nueva-plantilla",
   name: "Nueva plantilla",
+  entity: "Entidad simulada",
+  subject: "Asunto educativo sugerido",
   description: "Descripción del escenario educativo.",
+  previewText: "Texto seguro para la vista previa.",
   status: "Próximamente",
-  isAvailable: false
+  isAvailable: false,
+  accentClass: "template-card--nueva"
 }
 ```
 
@@ -81,7 +88,7 @@ Mientras `isAvailable` sea `false`, la tarjeta aparecerá bloqueada. Para habili
 
 1. Implementa y prueba el flujo correspondiente en n8n.
 2. Cambia `isAvailable` a `true`.
-3. Verifica que n8n utilice `templateId` para elegir el flujo correcto.
+3. Verifica que n8n utilice `template` o `templateId` para elegir el flujo correcto.
 4. Mantén textos, recursos y destinos estrictamente educativos; no incluyas logos reales ni contenido que capture credenciales.
 
 La etiqueta del botón y el resumen cambian automáticamente según la plantilla seleccionada.
