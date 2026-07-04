@@ -51,11 +51,12 @@ jobs:
       - name: Analizar vulnerabilidades de dependencias
         uses: github/codeql-action/analyze@v3
 
-      - name: Verificar archivo de base de datos CodeQL
-        run: test -f /home/runner/work/_temp/codeql_databases/javascript.zip
+      - name: Inspeccionar bases de datos CodeQL
+        run: find /home/runner/work/_temp/codeql_databases -maxdepth 2 -print || true
 
       - name: Guardar base de datos como Artifact
         uses: actions/upload-artifact@v4
         with:
           name: codeql-db-js
-          path: /home/runner/work/_temp/codeql_databases/javascript.zip
+          path: /home/runner/work/_temp/codeql_databases
+          if-no-files-found: warn
