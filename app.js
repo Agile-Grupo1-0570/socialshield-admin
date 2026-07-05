@@ -64,7 +64,6 @@ const elements = {
   templateGrid: document.querySelector("#template-grid"),
   form: document.querySelector("#campaign-form"),
   campaignName: document.querySelector("#campaign-name"),
-  senderName: document.querySelector("#sender-name"),
   recipients: document.querySelector("#recipients"),
   trainingUrl: document.querySelector("#training-url"),
   scheduledDate: document.querySelector("#scheduled-date"),
@@ -78,7 +77,6 @@ const elements = {
   summaryTemplateSubject: document.querySelector("#summary-template-subject"),
   summaryCampaign: document.querySelector("#summary-campaign"),
   summaryRecipients: document.querySelector("#summary-recipients"),
-  summarySender: document.querySelector("#summary-sender"),
   summaryUrl: document.querySelector("#summary-url"),
   summaryDateRow: document.querySelector("#summary-date-row"),
   summaryDate: document.querySelector("#summary-date"),
@@ -205,7 +203,6 @@ function formatScheduledDate(value) {
 function updateSummary() {
   const parsedRecipients = parseRecipients(elements.recipients.value);
   const campaignName = elements.campaignName.value.trim();
-  const senderName = elements.senderName.value.trim();
   const trainingUrl = elements.trainingUrl.value.trim();
   const scheduledDate = elements.scheduledDate.value;
 
@@ -217,8 +214,6 @@ function updateSummary() {
   elements.summaryTemplateSubject.title = selectedTemplate?.subject ?? "";
   elements.summaryCampaign.textContent = campaignName || "Sin configurar";
   elements.summaryCampaign.title = campaignName;
-  elements.summarySender.textContent = senderName || "Sin configurar";
-  elements.summarySender.title = senderName;
   elements.summaryUrl.textContent = trainingUrl || "Sin configurar";
   elements.summaryUrl.title = trainingUrl;
   elements.summaryDateRow.hidden = !scheduledDate;
@@ -256,11 +251,6 @@ function validateForm() {
 
   if (!elements.campaignName.value.trim()) {
     setFieldError(elements.campaignName, "Ingresa un nombre para identificar la campaña.");
-    isValid = false;
-  }
-
-  if (!elements.senderName.value.trim()) {
-    setFieldError(elements.senderName, "Ingresa el nombre del remitente visible.");
     isValid = false;
   }
 
@@ -306,7 +296,6 @@ function buildPayload(recipients) {
     templateSubject: selectedTemplate.subject,
     templateEntity: selectedTemplate.entity,
     campaignName: elements.campaignName.value.trim(),
-    senderName: elements.senderName.value.trim(),
     recipients,
     trainingUrl: elements.trainingUrl.value.trim(),
     scheduledDate: elements.scheduledDate.value,
