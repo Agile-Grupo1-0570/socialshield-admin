@@ -133,24 +133,6 @@
                 </div>
 
                 <div class="field">
-                  <label for="sender-name">Nombre del remitente visible <span aria-hidden="true">*</span></label>
-                  <input
-                    id="sender-name"
-                    name="senderName"
-                    type="text"
-                    placeholder="Ej. Centro de Seguridad Digital"
-                    autocomplete="off"
-                    maxlength="100"
-                    required
-                    aria-describedby="sender-name-help sender-name-error"
-                  />
-                  <p class="field-help" id="sender-name-help">
-                    El correo real de envío será el configurado en Gmail dentro de n8n.
-                  </p>
-                  <p class="field-error" id="sender-name-error"></p>
-                </div>
-
-                <div class="field">
                   <div class="label-row">
                     <label for="recipients">Correos destinatarios <span aria-hidden="true">*</span></label>
                     <span class="detected-count"><strong id="recipient-count">0</strong> válidos detectados</span>
@@ -206,6 +188,8 @@
                     <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3" />
                   </svg>
                   <p>
+                    El correo será enviado desde la cuenta Gmail configurada en n8n.
+                    <br />
                     Verifica que tienes autorización para incluir a todos los destinatarios.
                     SocialShield solo debe usarse en capacitaciones internas.
                   </p>
@@ -277,16 +261,6 @@
                     Destinatarios detectados
                   </dt>
                   <dd><strong id="summary-recipients">0</strong> personas</dd>
-                </div>
-                <div>
-                  <dt>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <circle cx="12" cy="8" r="4" />
-                      <path d="M4 21a8 8 0 0 1 16 0" />
-                    </svg>
-                    Nombre del remitente visible
-                  </dt>
-                  <dd id="summary-sender">Sin configurar</dd>
                 </div>
                 <div>
                   <dt>
