@@ -175,22 +175,6 @@ svg {
   box-shadow: inset 3px 0 0 var(--blue-500);
 }
 
-.nav-item--disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.nav-item__tag {
-  margin-left: auto;
-  padding: 2px 6px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
-  color: #8499b0;
-  font-size: 0.59rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
 .sidebar__footer {
   padding: 18px 10px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -1212,8 +1196,7 @@ textarea[aria-invalid="true"] {
   }
 
   .nav-label,
-  .sidebar__footer,
-  .nav-item--disabled {
+  .sidebar__footer {
     display: none;
   }
 
