@@ -18,6 +18,7 @@ const DEFAULT_TRAINING_URL = "https://agile-grupo1-0570.github.io/socialshield-a
  * 3. Cambia a `isAvailable: true` cuando el flujo correspondiente exista en n8n.
  * 4. No incluyas logos ni recursos oficiales de las entidades representadas.
  */
+
 const CAMPAIGN_TEMPLATES = [
   {
     id: "bcp",
