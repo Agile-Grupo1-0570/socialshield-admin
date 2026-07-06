@@ -5,7 +5,7 @@
  * Reemplaza este valor antes de publicar la interfaz.
  */
 const N8N_WEBHOOK_URL = "https://lordmathi2741-socialshield.hf.space/webhook/lanzar-campana";
-const DEFAULT_TRAINING_URL = "https://agile-grupo1-0570.github.io/socialshield-admin/";
+const DEFAULT_TRAINING_URL = "https://agile-grupo1-0570.github.io/micro-learning/";
 
 /**
  * Catálogo de plantillas educativas.
