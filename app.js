@@ -5,6 +5,7 @@
  * Reemplaza este valor antes de publicar la interfaz.
  */
 const N8N_WEBHOOK_URL = "https://lordmathi2741-socialshield.hf.space/webhook/lanzar-campana";
+const DEFAULT_TRAINING_URL = "https://agile-grupo1-0570.github.io/socialshield-admin/";
 
 /**
  * Catálogo de plantillas educativas.
@@ -184,6 +185,10 @@ function isValidHttpUrl(value) {
   }
 }
 
+function getTrainingUrl() {
+  return elements.trainingUrl.value.trim() || DEFAULT_TRAINING_URL;
+}
+
 function formatScheduledDate(value) {
   if (!value) {
     return "Envío inmediato";
@@ -203,7 +208,7 @@ function formatScheduledDate(value) {
 function updateSummary() {
   const parsedRecipients = parseRecipients(elements.recipients.value);
   const campaignName = elements.campaignName.value.trim();
-  const trainingUrl = elements.trainingUrl.value.trim();
+  const trainingUrl = getTrainingUrl();
   const scheduledDate = elements.scheduledDate.value;
 
   elements.recipientCount.textContent = String(parsedRecipients.valid.length);
@@ -214,7 +219,7 @@ function updateSummary() {
   elements.summaryTemplateSubject.title = selectedTemplate?.subject ?? "";
   elements.summaryCampaign.textContent = campaignName || "Sin configurar";
   elements.summaryCampaign.title = campaignName;
-  elements.summaryUrl.textContent = trainingUrl || "Sin configurar";
+  elements.summaryUrl.textContent = trainingUrl;
   elements.summaryUrl.title = trainingUrl;
   elements.summaryDateRow.hidden = !scheduledDate;
   elements.summaryDate.textContent = scheduledDate ? formatScheduledDate(scheduledDate) : "";
@@ -268,10 +273,7 @@ function validateForm() {
   }
 
   const trainingUrl = elements.trainingUrl.value.trim();
-  if (!trainingUrl) {
-    setFieldError(elements.trainingUrl, "Ingresa la URL del contenido de capacitación.");
-    isValid = false;
-  } else if (!isValidHttpUrl(trainingUrl)) {
+  if (trainingUrl && !isValidHttpUrl(trainingUrl)) {
     setFieldError(elements.trainingUrl, "Ingresa una URL válida que comience con http:// o https://.");
     isValid = false;
   }
@@ -297,7 +299,7 @@ function buildPayload(recipients) {
     templateEntity: selectedTemplate.entity,
     campaignName: elements.campaignName.value.trim(),
     recipients,
-    trainingUrl: elements.trainingUrl.value.trim(),
+    trainingUrl: getTrainingUrl(),
     scheduledDate: elements.scheduledDate.value,
     createdAt: new Date().toISOString(),
     source: "github-pages-admin",
